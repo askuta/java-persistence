@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+  <title>Spring JPA Quiz App</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+
+  <link rel="icon" href="../../favicon.ico"/>
+
+  <!-- Bootstrap core CSS -->
+  <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+
+  <link href="../static/css/custom.css" rel="stylesheet" th:href="@{/css/custom.css}"/>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+  <div class="container">
+
+    <h1 class="display-4 text-center" style="margin-top: 30px; margin-bottom: 50px">Spring Quiz App</h1>
+
+    <h3 th:text="${quiz.id == null} ? 'Create Quiz' : 'Update Quiz'" style="margin-bottom: 30px">Create or update Quiz</h3>
+
+    <form th:action="@{/quizzes/save}" th:object="${quiz}" method="post">
+
+      <input type="hidden" th:field="*{id}"/>
+      <input type="hidden" th:field="*{topic.id}"/>
+
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <input id="description" type="text" th:field="*{description}" class="form-control" />
+      </div>
+
+      <div class="form-group">
+        <label for="question">Question:</label>
+        <input id="question" type="text" th:field="*{question}" class="form-control" />
+      </div>
+
+      <div class="form-group">
+        <table class="table table-borderless table-sm" style="width: 70%">
+          <tbody>
+            <tr th:each="choice, status: ${quiz.choices}">
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="row">
+        <table class="table table-borderless table-sm" style="width: 100%">
+          <tbody>
+          <tr th:each="choice, status: ${quiz.choices}">
+            <input type="hidden" th:field="*{choices[__${status.index}__].id}"/>
+            <input type="hidden" th:field="*{choices[__${status.index}__].quiz.id}"/>
+
+            <td class="border-0" style="width: 5%"></td>
+            <td style="width: 5%">
+              <div class="form-check custom-checkbox checkbox-lg">
+                <input type="checkbox" th:field="*{choices[__${status.index}__].correct}" class="form-check-input" style="width: 1.2em; height: 1.2em"/>
+              </div>
+            </td>
+            <td>
+              <input type="text" th:field="*{choices[__${status.index}__].answer}" class="form-control" />
+            </td>
+            <td style="width: 5%">
+              <button type="submit" name="removeAnswer" th:value="${status.index}" class="btn btn-danger btn-sm m-1">
+                <i class="fa fa-trash-o fa-fw"></i>
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <button type="submit" name="addAnswer" class="btn btn-info btn-md float-right mb-5">Add Answer</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <button th:text="${quiz.id == null} ? 'Create Quiz' : 'Update Quiz'"
+                  class="btn btn-success btn-md float-right"></button>
+        </div>
+      </div>
+    </form>
+
+    <hr>
+
+    <div class="row">
+      <div class="col-12">
+        <a id="linkBack" th:href="@{/quizzes/topic/{topicId} (topicId=${quiz.topic.id})}" class="float-left">Back to Quizzes</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="../static/js/bootstrap.min.js" th:href="@{/js/bootstrap.min.js}"></script>
+
+</body>
+</html>

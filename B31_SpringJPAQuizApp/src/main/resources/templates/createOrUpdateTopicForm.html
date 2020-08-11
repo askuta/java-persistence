@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+  <title>Spring JPA Quiz App</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+
+  <link rel="icon" href="../../favicon.ico"/>
+
+  <!-- Bootstrap core CSS -->
+  <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+
+  <link href="../static/css/custom.css" rel="stylesheet" th:href="@{/css/custom.css}"/>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+  <div class="container">
+
+    <h1 class="display-4 text-center" style="margin-top: 30px; margin-bottom: 50px">Spring Quiz App</h1>
+
+    <h3 th:text="${topic.id == null} ? 'Create Topic' : 'Update Topic'" style="margin-bottom: 30px">Create or update Topics</h3>
+
+    <form th:with="action=${topic.id == null ? '/topics/create' : '/topics/' + topic.id + '/edit'}"
+          th:action="@{${action}}" th:object="${topic}" method="post">
+
+      <div class="form-group">
+        <label for="name">Topic Name:</label>
+        <input id="name" type="text" th:field="*{name}" class="form-control" />
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <button th:text="${topic.id == null} ? 'Create Topic' : 'Update Topic'"
+                  class="btn btn-success btn-md float-right"></button>
+        </div>
+      </div>
+    </form>
+
+    <hr>
+
+    <div class="container">
+      <div class="row">
+        <a id="linkBack" th:href="@{/topics}" class="float-left">Back to Topics</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="../static/js/bootstrap.min.js" th:href="@{/js/bootstrap.min.js}"></script>
+
+</body>
+</html>
