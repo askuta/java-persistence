@@ -2,6 +2,8 @@ package com.epam.quiz.service
 
 import com.epam.quiz.entity.Quiz
 import com.epam.quiz.repository.QuizRepository
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import java.util.NoSuchElementException
 import javax.transaction.Transactional
@@ -10,9 +12,9 @@ import javax.transaction.Transactional
 @Transactional
 class QuizService(val quizRepository: QuizRepository) {
 
-    fun findAllQuizzes(): List<Quiz> = quizRepository.findAll()
+    fun findAllQuizzes(pageable: Pageable): Page<Quiz> = quizRepository.findAll(pageable)
 
-    fun findQuizzesByTopicId(topicId: Long) = quizRepository.findAllByTopicId(topicId)
+    fun findQuizzesByTopicId(topicId: Long, pageable: Pageable) = quizRepository.findAllByTopic_Id(topicId, pageable)
 
     fun findQuizById(quizId: Long): Quiz =
             quizRepository.findById(quizId).orElseThrow { NoSuchElementException("Quiz ID $quizId not found.") }

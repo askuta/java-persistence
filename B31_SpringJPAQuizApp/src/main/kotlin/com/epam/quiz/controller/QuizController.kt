@@ -4,6 +4,7 @@ import com.epam.quiz.entity.Choice
 import com.epam.quiz.entity.Quiz
 import com.epam.quiz.service.QuizService
 import com.epam.quiz.service.TopicService
+import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.ui.set
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import javax.servlet.http.HttpServletRequest
 
 @Controller
@@ -19,9 +21,14 @@ import javax.servlet.http.HttpServletRequest
 class QuizController(val topicService: TopicService, val quizService: QuizService) {
 
     @GetMapping("/topic/{topicId}")
-    fun getQuizzesByTopicId(@PathVariable("topicId") topicId: Long, model: Model): String {
+    fun getQuizzesByTopicId(
+        @PathVariable("topicId") topicId: Long,
+        @RequestParam(defaultValue = "0") page: Int,
+        @RequestParam(defaultValue = "20") size: Int,
+        model: Model
+    ): String {
         model["topic"] = topicService.findTopicById(topicId)
-        model["quizzes"] = quizService.findQuizzesByTopicId(topicId)
+        model["quizzes"] = quizService.findQuizzesByTopicId(topicId, PageRequest.of(page, size))
         return "quizzes"
     }
 
