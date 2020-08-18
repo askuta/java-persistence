@@ -12,11 +12,11 @@ class RestResponseExceptionHandler : ResponseEntityExceptionHandler() {
 
     @ExceptionHandler(value = [(NoSuchElementException::class)])
     fun handleIdDoesNotExist(exception: NoSuchElementException): ResponseEntity<String> =
-            ResponseEntity(exception.message, HttpStatus.NOT_FOUND)
+            ResponseEntity(exception.message ?: "", HttpStatus.NOT_FOUND)
 
     @ExceptionHandler(value = [(ConstraintViolationException::class), (IllegalArgumentException::class)])
     fun handleBadRequest(exception: ConstraintViolationException): ResponseEntity<String> =
-            ResponseEntity(exception.message, HttpStatus.BAD_REQUEST)
+            ResponseEntity(exception.message ?: "", HttpStatus.BAD_REQUEST)
 
     @ExceptionHandler(value = [(Exception::class)])
     fun handleExceptions(exception: Exception): ResponseEntity<String> =
