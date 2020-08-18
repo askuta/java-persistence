@@ -7,6 +7,7 @@ import java.util.NoSuchElementException
 import javax.transaction.Transactional
 
 @Service
+@Transactional
 class TopicService(val topicRepository: TopicRepository) {
 
     fun findAllTopics(): List<Topic> = topicRepository.findAll()
@@ -14,10 +15,8 @@ class TopicService(val topicRepository: TopicRepository) {
     fun findTopicById(topicId: Long): Topic =
             topicRepository.findById(topicId).orElseThrow { NoSuchElementException("Topic ID $topicId not found.") }
 
-    @Transactional
     fun saveTopic(topic: Topic) = topicRepository.save(topic)
 
-    @Transactional
     fun deleteTopicById(topicId: Long) {
         val topic: Topic = topicRepository.findById(topicId)
                 .orElseThrow { NoSuchElementException("Topic ID $topicId not found.") }
