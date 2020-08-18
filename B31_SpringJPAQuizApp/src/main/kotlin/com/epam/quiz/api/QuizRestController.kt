@@ -33,7 +33,6 @@ class QuizRestController(val quizService: QuizService) {
 
     @PutMapping
     fun updateQuiz(@RequestBody quiz: Quiz): Quiz {
-        quiz.choices.forEach { it.quiz = quiz }
         quizService.saveQuiz(quiz)
         return quiz
     }
