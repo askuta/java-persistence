@@ -37,16 +37,10 @@ class QuizRestController(val quizService: QuizService) {
     fun getQuiz(@PathVariable("quizId") quizId: Long) = quizService.findQuizById(quizId)
 
     @PostMapping
-    fun createQuiz(@RequestBody quiz: Quiz): Quiz {
-        quizService.saveQuiz(quiz)
-        return quiz
-    }
+    fun createQuiz(@RequestBody quiz: Quiz): Quiz = quizService.saveQuiz(quiz)
 
     @PutMapping
-    fun updateQuiz(@RequestBody quiz: Quiz): Quiz {
-        quizService.saveQuiz(quiz)
-        return quiz
-    }
+    fun updateQuiz(@RequestBody quiz: Quiz): Quiz = quizService.saveQuiz(quiz)
 
     @DeleteMapping("/{quizId}")
     fun deleteQuizById(@PathVariable("quizId") quizId: Long) = quizService.deleteQuizById(quizId)

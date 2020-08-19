@@ -17,7 +17,7 @@ class TopicService(val topicRepository: TopicRepository) {
     fun findTopicById(topicId: Long): Topic =
             topicRepository.findById(topicId).orElseThrow { NoSuchElementException("Topic ID $topicId not found.") }
 
-    fun saveTopic(topic: Topic) = topicRepository.save(topic)
+    fun saveTopic(topic: Topic): Topic = topicRepository.save(topic)
 
     fun deleteTopicById(topicId: Long) {
         val topic: Topic = topicRepository.findById(topicId)

@@ -29,16 +29,10 @@ class TopicRestController(val topicService: TopicService) {
     fun getTopic(@PathVariable("topicId") topicId: Long): Topic = topicService.findTopicById(topicId)
 
     @PostMapping
-    fun createTopic(@RequestBody topic: Topic): Topic {
-        topicService.saveTopic(topic)
-        return topic
-    }
+    fun createTopic(@RequestBody topic: Topic): Topic = topicService.saveTopic(topic)
 
     @PutMapping
-    fun updateTopic(@RequestBody topic: Topic): Topic {
-        topicService.saveTopic(topic)
-        return topic
-    }
+    fun updateTopic(@RequestBody topic: Topic): Topic = topicService.saveTopic(topic)
 
     @DeleteMapping("/{topicId}")
     fun deleteTopicById(@PathVariable("topicId") topicId: Long) = topicService.deleteTopicById(topicId)

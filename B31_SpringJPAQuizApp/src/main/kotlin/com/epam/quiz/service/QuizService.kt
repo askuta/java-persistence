@@ -19,9 +19,9 @@ class QuizService(val quizRepository: QuizRepository) {
     fun findQuizById(quizId: Long): Quiz =
             quizRepository.findById(quizId).orElseThrow { NoSuchElementException("Quiz ID $quizId not found.") }
 
-    fun saveQuiz(quiz: Quiz) {
+    fun saveQuiz(quiz: Quiz): Quiz {
         quiz.choices.forEach { it.quiz = quiz }
-        quizRepository.save(quiz)
+        return quizRepository.save(quiz)
     }
 
     fun deleteQuizById(quizId: Long) {
