@@ -7,23 +7,23 @@ import javax.persistence.FetchType
 import javax.persistence.JoinColumn
 import javax.persistence.ManyToOne
 import javax.persistence.Table
-import javax.validation.constraints.NotBlank
+import javax.validation.constraints.NotNull
 import javax.validation.constraints.Size
 
 @Entity
 @Table(name = "choices")
-class Choice : BaseEntity() {
+class Choice(
 
     @JsonIgnore
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "quiz_id")
-    var quiz: Quiz? = null
+    var quiz: Quiz? = null,
 
-    @NotBlank(message = "Choice answer is mandatory.")
     @Size(min = 1, max = 255, message = "The length of choice answer must be between 1 and 255")
     @Column(name = "answer")
-    var answer: String = ""
+    var answer: String = "",
 
     @Column(name = "correct")
     var correct: Boolean = false
-}
+) : BaseEntity()

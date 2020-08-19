@@ -2,6 +2,7 @@ package com.epam.quiz.controller
 
 import com.epam.quiz.entity.Choice
 import com.epam.quiz.entity.Quiz
+import com.epam.quiz.entity.Topic
 import com.epam.quiz.service.QuizService
 import com.epam.quiz.service.TopicService
 import org.springframework.data.domain.PageRequest
@@ -34,8 +35,8 @@ class QuizController(val topicService: TopicService, val quizService: QuizServic
 
     @GetMapping("/topic/{topicId}/create")
     fun getCreateQuizForm(@PathVariable("topicId") topicId: Long, model: Model): String {
-        val quiz: Quiz = Quiz()
-        quiz.topic = topicService.findTopicById(topicId)
+        val topic: Topic = topicService.findTopicById(topicId)
+        val quiz: Quiz = Quiz(topic = topic)
         quiz.addChoice(Choice())
         quiz.addChoice(Choice())
         model["quiz"] = quiz
@@ -53,7 +54,7 @@ class QuizController(val topicService: TopicService, val quizService: QuizServic
         return if (result.hasErrors()) {
             "createOrUpdateQuizForm"
         } else {
-            val topicId: Long? = quiz.topic?.id
+            val topicId: Long? = quiz.topic.id
             quizService.saveQuiz(quiz)
             "redirect:/quizzes/topic/$topicId"
         }

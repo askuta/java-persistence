@@ -10,17 +10,17 @@ import javax.persistence.Table
 
 @Entity
 @Table(name = "attempts")
-class Attempt : BaseEntity() {
+class Attempt(
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    var user: User? = null
+    @JoinColumn(name = "user_id", updatable = false)
+    var user: User,
 
     @ManyToOne
-    @JoinColumn(name = "quiz_id")
-    var quiz: Quiz? = null
+    @JoinColumn(name = "quiz_id", updatable = false)
+    var quiz: Quiz,
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "result")
-    var result: AttemptResult? = null
-}
+    @Column(name = "result", updatable = false)
+    var result: AttemptResult = AttemptResult.FAILED
+) : BaseEntity()
