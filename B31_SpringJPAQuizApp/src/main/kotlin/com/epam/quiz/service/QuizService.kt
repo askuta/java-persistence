@@ -25,8 +25,8 @@ class QuizService(val quizRepository: QuizRepository) {
     }
 
     fun deleteQuizById(quizId: Long) {
-        val quiz: Quiz = quizRepository.findById(quizId)
-                .orElseThrow { NoSuchElementException("Quiz ID $quizId not found.") }
-        quizRepository.delete(quiz)
+        if (quizRepository.deleteQuizById(quizId) < 1) {
+            throw NoSuchElementException("Quiz ID $quizId not found.")
+        }
     }
 }

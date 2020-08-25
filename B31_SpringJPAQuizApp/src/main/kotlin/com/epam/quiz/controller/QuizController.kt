@@ -11,6 +11,7 @@ import org.springframework.ui.Model
 import org.springframework.ui.set
 import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.GetMapping
+//import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -20,6 +21,15 @@ import javax.servlet.http.HttpServletRequest
 @Controller
 @RequestMapping("/quizzes")
 class QuizController(val topicService: TopicService, val quizService: QuizService) {
+
+//    @ModelAttribute("module")
+//    fun module(): String = "quiz"
+
+    @GetMapping
+    fun getAllQuizzes(model: Model): String {
+        model["quizzes"] = quizService.findAllQuizzes(PageRequest.of(0, 20))
+        return "quizzes"
+    }
 
     @GetMapping("/topic/{topicId}")
     fun getQuizzesByTopicId(

@@ -14,6 +14,9 @@ import javax.validation.constraints.Size
 @Table(name = "choices")
 class Choice(
 
+    // TODO find better solution for JSON serializatioin and deserialization
+    // @JsonIdentityReference(alwaysAsId = true)
+    // @JsonIdentityInfo
     @JsonIgnore
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)

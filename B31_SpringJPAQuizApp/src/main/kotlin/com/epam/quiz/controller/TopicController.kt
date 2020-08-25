@@ -8,6 +8,7 @@ import org.springframework.ui.Model
 import org.springframework.ui.set
 import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -16,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam
 @Controller
 @RequestMapping("/topics")
 class TopicController(val topicService: TopicService) {
+
+    @ModelAttribute("module")
+    fun module(): String = "quizzes"
 
     @GetMapping
     fun getAllTopics(
